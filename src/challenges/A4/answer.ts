@@ -27,11 +27,27 @@
  */
 
 // ↓ uncomment bellow lines and add your response!
-/*
-export default function ({ messages }: { messages: Message[] }): DayMessages[] {
-    return [];
+
+ export default function ({ messages }: { messages: Message[] }): DayMessages[] {
+    const sortedMessages: Message[] = messages.sort((a: Message, b: Message) => {
+        const dateA = new Date(a.sentAt);
+        const dateB = new Date(b.sentAt);
+        return dateA.getTime() - dateB.getTime();
+    });
+    const days: DayMessages[] = [];
+    sortedMessages.forEach(message => {
+        const date = new Date(message.sentAt);
+        const day = new Date(date.setUTCHours(0, 0, 0, 0)).toISOString();
+        const dayMessages = days.find(dayMessages => dayMessages.day === day);
+        if (dayMessages) {
+            dayMessages.messages.push(message);
+        } else {
+            days.push({ day, messages: [message] });
+        }
+    });
+    return days;
 }
-*/
+
 
 // used interfaces, do not touch
 export interface Message {

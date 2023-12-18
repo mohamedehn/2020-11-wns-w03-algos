@@ -8,11 +8,17 @@
  */
 
 // ↓ uncomment bellow lines and add your response!
-/*
+
 export default function ({ events }: { events: EventDatetime[] }): EventDatetime[] {
-    return [];
+    events.sort((a: EventDatetime, b: EventDatetime) => {
+        if (a.startDatetime === b.startDatetime) {
+            return a.endDatetime.localeCompare(b.endDatetime);
+        }
+        return a.startDatetime.localeCompare(b.startDatetime);
+    })
+    return events;
 }
-*/
+
 
 // used interfaces, do not touch
 export interface EventDatetime {

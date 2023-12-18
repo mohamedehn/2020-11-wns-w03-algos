@@ -9,11 +9,24 @@
  */
 
 // ↓ uncomment bellow lines and add your response!
-/*
-export default function ({ groups }: { groups: Group[] }): GroupWithSills[] {
-    return [];
+
+export default function ({ groups }: { groups: Group[] }): GroupWithSkills[] {
+    const groupsSkills : GroupWithSkills[] = [];
+    groups.forEach(group => {
+        const skills : string[] = [];
+        group.students.forEach(student => {
+            student.skills.forEach(skill => {
+                if (!skills.includes(skill)) {
+                    skills.push(skill);
+                }
+            });
+        });
+        skills.sort();
+        groupsSkills.push({...group, skills});
+    });
+    return groupsSkills;
 }
-*/
+
 
 // used interfaces, do not touch
 interface Student {
@@ -27,6 +40,6 @@ export interface Group {
     name: string;
 }
 
-export interface GroupWithSills extends Group {
+export interface GroupWithSkills extends Group {
     skills: string[];
 }

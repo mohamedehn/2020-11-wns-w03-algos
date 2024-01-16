@@ -9,11 +9,29 @@
  */
 
 // ↓ uncomment bellow lines and add your response!
-/*
+
+/* 
 export default function ({ groups }: { groups: GroupWithSills[] }): GroupWithSillsAndClosestGroups[] {
-    return [];
+    const groupsWithClosestGroups: GroupWithSillsAndClosestGroups[] = [];
+    groups.forEach(group => {
+        const closestGroups: GroupWithSills[] = [];
+        groups.forEach(otherGroup => {
+            if (group.name !== otherGroup.name) {
+                const commonSkills = group.skills.filter(skill => otherGroup.skills.includes(skill));
+                if (commonSkills.length > 0) {
+                    closestGroups.push(otherGroup);
+                }
+            }
+        });
+        groupsWithClosestGroups.push({
+            ...group,
+            closestGroups: closestGroups.sort((a, b) => a.name.localeCompare(b.name))
+        });
+    });
+    return groupsWithClosestGroups;
 }
 */
+
 
 // used interfaces, do not touch
 export interface GroupWithSills {

@@ -49,11 +49,40 @@
  */
 
 // ↓ uncomment bellow lines and add your response!
-/*
+
 export default function ({ submissions }: {submissions: Submission[] }): MonthSubmission[] {
-    return [];
+    const monthSubmissions: MonthSubmission[] = [];
+    const months = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"];
+    const years = ["2020", "2021"];
+
+    // Initialisation de monthSubmissions
+    years.forEach(year => {
+        months.forEach(month => {
+            monthSubmissions.push({
+                month: `${year}-${month}-01T00:00:00.000Z`,
+                submissions: []
+            });
+        });
+    });
+
+    // Ajout des soumissions aux mois correspondants
+    submissions.forEach(submission => {
+        const matchingMonth = monthSubmissions.find(monthSubmission => monthSubmission.month === submission.submittedAt.slice(0, 7) + "-01T00:00:00.000Z");
+        if (matchingMonth) {
+            matchingMonth.submissions.push(submission);
+        }
+    });
+
+    // Filtre des mois
+    const filteredMonthSubmissions = monthSubmissions.filter(monthSubmission => monthSubmission.submissions.length > 0);
+
+    // Tri des soumissions dans chaque mois
+    filteredMonthSubmissions.forEach(monthSubmission => {
+        monthSubmission.submissions.sort((a, b) => new Date(a.submittedAt).getTime() - new Date(b.submittedAt).getTime());
+    });
+
+    return filteredMonthSubmissions;
 }
-*/
 
 // used interfaces, do not touch
 export interface Submission {

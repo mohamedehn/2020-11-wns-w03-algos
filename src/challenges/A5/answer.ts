@@ -21,10 +21,34 @@
  */
 
 // ↓ uncomment bellow lines and add your response!
+
 /*
 export default function ({ events }: { events: Event[] }): PlanningSlot[] {
-    return [];
+    const planning: PlanningSlot[] = [];
+    const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+    const hours = ["00:00", "01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "07:00", "08:00", "09:00",
+        "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00",
+        "20:00", "21:00", "22:00", "23:00"];
+    days.forEach(day => {
+        hours.forEach(hour => {
+            planning.push({
+                startTime: hour,
+                endTime: hour === "23" ? "00" : hours[hours.indexOf(hour) + 1],
+                day: day,
+            });
+        });
+    });
+    events.forEach(event => {
+        const matchingSlot = planning.filter(slot => slot.day === event.day && slot.startTime === event.startTime);
+        matchingSlot.forEach(slot => {
+            if(slot){
+                slot.event = event;
+            }
+        });
+    });
+    return planning;
 }
+
 */
 
 // used interfaces, do not touch
